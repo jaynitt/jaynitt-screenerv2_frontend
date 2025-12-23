@@ -1,8 +1,21 @@
 import React, { useEffect, useState } from "react";
 import StockTable from "./components/StockTable";
 import {
-  TextField, Button, Container, Typography, MenuItem, Select,
-  FormControl, InputLabel, Box, ThemeProvider, createTheme, Paper, AppBar, Toolbar, IconButton
+  TextField,
+  Button,
+  Container,
+  Typography,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  Box,
+  ThemeProvider,
+  createTheme,
+  Paper,
+  AppBar,
+  Toolbar,
+  IconButton,
 } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
@@ -52,14 +65,9 @@ function App() {
     { field: "marketcap", operator: ">", value: "20" },
   ]);
   const [queried, setQueried] = useState(false);
-useEffect(() => {
-  
-fetchStocks()
-
-}, [])
-
-
-
+  useEffect(() => {
+    fetchStocks();
+  }, []);
 
   const handleConditionChange = (idx, key, val) => {
     const updated = [...conditions];
@@ -68,7 +76,10 @@ fetchStocks()
   };
 
   const addCondition = () => {
-    setConditions([...conditions, { field: "marketcap", operator: ">", value: "" }]);
+    setConditions([
+      ...conditions,
+      { field: "marketcap", operator: ">", value: "" },
+    ]);
   };
 
   const removeCondition = (idx) => {
@@ -76,7 +87,8 @@ fetchStocks()
   };
 
   const fetchStocks = async () => {
-    const url = "https://screenerv2-backend.vercel.app/database/conditionalstock";
+    const url =
+      "https://screenerv2-backend.vercel.app/database/conditionalstock";
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -84,7 +96,7 @@ fetchStocks()
     };
     const res = await fetch(url, options);
     const data = await res.json();
-    console.log(data)
+    console.log(data);
     setStocks(data);
     setQueried(true);
   };
@@ -120,12 +132,27 @@ fetchStocks()
       </Box>
 
       {/* Navbar */}
-      <AppBar position="static" color="transparent" sx={{ backdropFilter: "blur(10px)", boxShadow: "none", borderBottom: "1px solid rgba(255,255,255,0.2)" }}>
+      <AppBar
+        position="static"
+        color="transparent"
+        sx={{
+          backdropFilter: "blur(10px)",
+          boxShadow: "none",
+          borderBottom: "1px solid rgba(255,255,255,0.2)",
+        }}
+      >
         <Toolbar>
           <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
-            <img src="/ProfNITT-logo.png" alt="ProfNITT Logo" style={{ height: 48, marginRight: 16 }} />
+            <img
+              src="/ProfNITT-logo.png"
+              alt="ProfNITT Logo"
+              style={{ height: 48, marginRight: 16 }}
+            />
           </Box>
-          <Typography variant="h6" sx={{ fontWeight: "bold", color: "#00e5ff" }}>
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: "bold", color: "#00e5ff" }}
+          >
             Stock Screener
           </Typography>
         </Toolbar>
@@ -134,7 +161,13 @@ fetchStocks()
       {/* Main Container */}
       <Container
         maxWidth="sm"
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "85vh" }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "85vh",
+        }}
       >
         {/* Glass Effect Card */}
         <motion.div
@@ -171,13 +204,23 @@ fetchStocks()
 
             {/* Conditions */}
             {conditions.map((cond, idx) => (
-              <Box key={idx} sx={{ display: "flex", gap: 2, justifyContent: "center", mb: 2 }}>
-                <FormControl sx={{ minWidth: 120 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column", sm: "row" },
+                  gap: 2,
+                  alignItems: "center",
+                  mb: 2,
+                }}
+              >
+                <FormControl sx={{ minWidth: { xs: "100%", sm: 120 } }}>
                   <InputLabel>Field</InputLabel>
                   <Select
                     value={cond.field}
                     label="Field"
-                    onChange={(e) => handleConditionChange(idx, "field", e.target.value)}
+                    onChange={(e) =>
+                      handleConditionChange(idx, "field", e.target.value)
+                    }
                   >
                     {fields.map((f) => (
                       <MenuItem key={f.value} value={f.value}>
@@ -187,12 +230,14 @@ fetchStocks()
                   </Select>
                 </FormControl>
 
-                <FormControl sx={{ minWidth: 80 }}>
+                <FormControl sx={{ minWidth: { xs: "100%", sm: 120 } }}>
                   <InputLabel>Operator</InputLabel>
                   <Select
                     value={cond.operator}
                     label="Operator"
-                    onChange={(e) => handleConditionChange(idx, "operator", e.target.value)}
+                    onChange={(e) =>
+                      handleConditionChange(idx, "operator", e.target.value)
+                    }
                   >
                     {operators.map((o) => (
                       <MenuItem key={o.value} value={o.value}>
@@ -205,22 +250,39 @@ fetchStocks()
                 <TextField
                   label="Value"
                   value={cond.value}
-                  onChange={(e) => handleConditionChange(idx, "value", e.target.value)}
-                  sx={{ minWidth: 120 }}
+                  onChange={(e) =>
+                    handleConditionChange(idx, "value", e.target.value)
+                  }
+                  sx={{ minWidth: { xs: "100%", sm: 120 } }}
                 />
+<Box
+  sx={{
+    display: "flex",
+    gap: 1,
+    alignSelf: { xs: "flex-end", sm: "center" },
+  }}
+>
+  <IconButton
+    size="small"
+    color="secondary"
+    onClick={() => removeCondition(idx)}
+    disabled={conditions.length === 1}
+  >
+    <RemoveCircleIcon fontSize="small" />
+  </IconButton>
 
-                <IconButton
-                  color="secondary"
-                  onClick={() => removeCondition(idx)}
-                  disabled={conditions.length === 1}
-                >
-                  <RemoveCircleIcon />
-                </IconButton>
-                {idx === conditions.length - 1 && (
-                  <IconButton color="primary" onClick={addCondition}>
-                    <AddCircleIcon />
-                  </IconButton>
-                )}
+  {idx === conditions.length - 1 && (
+    <IconButton
+      size="small"
+      color="primary"
+      onClick={addCondition}
+    >
+      <AddCircleIcon fontSize="small" />
+    </IconButton>
+  )}
+</Box>
+
+  
               </Box>
             ))}
 
@@ -262,7 +324,11 @@ fetchStocks()
         )}
 
         {queried && stocks.length === 0 && (
-          <Typography align="center" color="secondary" sx={{ mt: 4, fontWeight: "bold" }}>
+          <Typography
+            align="center"
+            color="secondary"
+            sx={{ mt: 4, fontWeight: "bold" }}
+          >
             No results found.
           </Typography>
         )}
