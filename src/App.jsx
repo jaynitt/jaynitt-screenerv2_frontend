@@ -76,7 +76,7 @@ fetchStocks()
   };
 
   const fetchStocks = async () => {
-    const url = "http://localhost:5000/database/conditionalstock";
+    const url = "https://screenerv2-backend.vercel.app/database/conditionalstock";
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
