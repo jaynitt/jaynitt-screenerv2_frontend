@@ -28,7 +28,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { motion, AnimatePresence } from "framer-motion";
 
-// ==================== CONFIG ====================
+
 const API_URL = "https://screenerv2-backend.vercel.app/database/conditionalstock";
 
 
@@ -248,10 +248,10 @@ function App() {
 
   return (
     <ThemeProvider theme={blueTheme}>
-      {/* Animated background image, treated differently per page */}
+
       <BackgroundLayer variant={page} />
 
-      {/* Navbar */}
+      
       <AppBar
         position="static"
         color="transparent"
