@@ -189,22 +189,33 @@ function App() {
   const fetchStocks = async () => {
     setLoading(true);
     setError(null);
-
-
-    const payload = conditions
-  .filter((c) => c.enabled && c.value !== "")
-  .map(({ field, operator, value }) => ({
-    field,
-    operator,
-    value,
-  }));
-
+  
+    const enabledConditions = conditions.filter(
+      (c) => c.enabled && c.value !== ""
+    );
+  
     try {
-      const res = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      let res;
+      if (enabledConditions.length === 0) {
+        res = await fetch(
+          "https://screenerv2-backend.vercel.app/database/getallstock"
+        );
+      } else {
+        const payload = enabledConditions.map(({ field, operator, value }) => ({
+          field,
+          operator,
+          value,
+        }));
+  
+        res = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+      }
+  
       const data = await res.json();
       setStocks(Array.isArray(data) ? data : []);
       setPage("results");

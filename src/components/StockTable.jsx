@@ -20,7 +20,7 @@ export default function StockTable({ stocks }) {
       sx={{
         width: "100%",
         backgroundColor: "rgba(0, 51, 102, 0.4)",
-        borderRadius: 4,
+        borderRadius: 1,
         backdropFilter: "blur(12px)",
         border: "1px solid rgba(255,255,255,0.1)",
         boxShadow: "0 0 30px rgba(0, 200, 255, 0.12)",
